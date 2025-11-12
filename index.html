@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NightDreamX - Games</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #00ffff;
+    }
+
+    nav {
+      margin-top: 10px;
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #00ffff;
+    }
+
+    main {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .section {
+      margin: 40px auto;
+      max-width: 900px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .game-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .game-thumbnail {
+      width: 300px;
+      height: 200px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      margin: 15px;
+    }
+
+    .game-thumbnail:hover {
+      transform: scale(1.05);
+    }
+
+    .game-button {
+      background-color: #00ffff;
+      color: #111;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .game-button:hover {
+      background-color: #00b3b3;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      color: white;
+      font-size: 2em;
+      border: none;
+      cursor: pointer;
+      z-index: 2000;
+    }
+
+    .close-button:hover {
+      color: #ff0000;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>NightDreamX - Games</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Games</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="section">
+      <h2>Browse Our Games</h2>
+      <div class="game-container">
+        <div>
+          <img src="your-thumbnail-url/simple-clicker.jpg" class="game-thumbnail" data-game="game1" alt="Simple Clicker">
+          <p>🕹️ Simple Clicker</p>
+          <button class="game-button" data-game="game1">Play Fullscreen</button>
+        </div>
+
+        <div>
+          <img src="your-thumbnail-url/space-game.jpg" class="game-thumbnail" data-game="game2" alt="Space Game">
+          <p>🚀 Space Game</p>
+          <button class="game-button" data-game="game2">Play Fullscreen</button>
+        </div>
+
+        <div>
+          <img src="your-thumbnail-url/puzzle-challenge.jpg" class="game-thumbnail" data-game="game3" alt="Puzzle Challenge">
+          <p>🧠 Puzzle Challenge</p>
+          <button class="game-button" data-game="game3">Play Fullscreen</button>
+        </div>
+
+        <div>
+          <img src="your-thumbnail-url/krunker.jpg" class="game-thumbnail" data-game="krunker" alt="Krunker.io">
+          <p>🔫 Krunker.io</p>
+          <button class="game-button" data-game="krunker">Play Fullscreen</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 NightDreamX. All rights reserved.
+  </footer>
+
+  <script>
+    const gameSources = {
+      game1: "https://yourgameurl/simple-clicker",
+      game2: "https://yourgameurl/space-game",
+      game3: "https://yourgameurl/puzzle-challenge",
+      krunker: "https://krunker.io/"
+    };
+
+    document.querySelectorAll('.game-button').forEach(button => {
+      button.addEventListener('click', () => {
+        const gameId = button.getAttribute('data-game');
+        openFullscreen(gameId);
+      });
+    });
+
+    function openFullscreen(gameId) {
+      const gameSrc = gameSources[gameId];
+      if (!gameSrc) return;
+
+      const fullscreenContainer = document.createElement('div');
+      fullscreenContainer.style.position = 'fixed';
+      fullscreenContainer.style.top = '0';
+      fullscreenContainer.style.left = '0';
+      fullscreenContainer.style.width = '100vw';
+      fullscreenContainer.style.height = '100vh';
+      fullscreenContainer.style.backgroundColor = 'black';
+      fullscreenContainer.style.zIndex = '1000';
+
+      const iframe = document.createElement('iframe');
+      iframe.src = gameSrc;
+      iframe.width = '100%';
+      iframe.height = '100%';
+      iframe.allowFullscreen = true;
+      iframe.style.border = "none";
+
+      const closeButton = document.createElement('button');
+      closeButton.classList.add('close-button');
+      closeButton.textContent = '×';
+      closeButton.addEventListener('click', () => {
+        document.body.removeChild(fullscreenContainer);
+      });
+
+      fullscreenContainer.appendChild(closeButton);
+      fullscreenContainer.appendChild(iframe);
+      document.body.appendChild(fullscreenContainer);
+    }
+  </script>
+
+</body>
+</html>
